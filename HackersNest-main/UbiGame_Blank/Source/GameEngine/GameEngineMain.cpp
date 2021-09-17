@@ -12,8 +12,8 @@
 
 using namespace GameEngine;
 
-float GameEngineMain::WINDOW_HEIGHT = 500;
-float GameEngineMain::WINDOW_WIDTH = 500;
+float GameEngineMain::WINDOW_HEIGHT = 800;
+float GameEngineMain::WINDOW_WIDTH = 1609;
 //Nullptr init for singleton class
 GameEngineMain* GameEngineMain::sm_instance = nullptr;
 sf::Clock		GameEngineMain::sm_deltaTimeClock;
@@ -23,8 +23,9 @@ std::vector<Entity*> GameEngineMain::s_emptyEntityTagList;
 
 GameEngineMain::GameEngineMain()
     : m_renderTarget(nullptr)
-    , m_gameBoard(nullptr)
     , m_windowInitialised(false)
+    , m_currentSceneState(SceneState::NoScene)
+    , m_currentScene(nullptr)
 {
     CreateAndSetUpWindow();
     //Load predefined textures
@@ -46,9 +47,10 @@ GameEngineMain::~GameEngineMain()
 void GameEngineMain::OnInitialised()
 {
     //Engine is initialised, this spot should be used for game object and clocks initialisation
-    m_gameBoard = new Game::GameBoard();
     sm_deltaTimeClock.restart();
     sm_gameClock.restart();
+    ChangeSceneState(SceneState::GameBoard_Scene);
+
 }
 
 
@@ -106,6 +108,35 @@ void GameEngineMain::RefreshEntityTag(Entity* entity)
     }
 }
 
+void GameEngineMain::ChangeSceneState(SceneState newState)
+{
+    if (newState != m_currentSceneState)
+    {
+        if (m_currentSceneState != SceneState::NoScene)
+        {
+            m_currentScene->Clean();
+        }
+        delete m_currentScene;
+        m_currentScene = nullptr;
+        m_currentSceneState = newState;
+        switch (m_currentSceneState)
+        {
+        case GameEngine::Menu_Scene:
+            m_currentScene = new Game::MenuScene();
+            break;
+        case GameEngine::GameBoard_Scene:
+            m_currentScene = new Game::GameBoard();
+            break;
+        case GameEngine::End_Scene:
+            break;
+        case GameEngine::Num_of_Scenes:
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 
 void GameEngineMain::RemoveEntityTagFromMap(Entity* entity, std::string tag)
 {
@@ -158,11 +189,13 @@ void GameEngineMain::Update()
         OnInitialised();
     }
 
+    if (m_currentScene)
+        m_currentScene->Update();
+
     RemovePendingEntities();
 
     UpdateWindowEvents();
-    if (m_gameBoard)
-        m_gameBoard->Update();
+
 
     UpdateEntities();
     RenderEntities();

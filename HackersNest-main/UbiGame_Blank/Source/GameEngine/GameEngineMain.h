@@ -7,11 +7,21 @@
 
 #include "Game/GameBoard.h"
 
+#include "GameEngine/EntitySystem/Scene.h"
+#include "Game/MenuScene.h"
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/RenderComponent.h"
 
 namespace GameEngine
 {
+    enum SceneState
+    {
+        NoScene = -1,
+        Menu_Scene = 0,
+        GameBoard_Scene,
+        End_Scene,
+        Num_of_Scenes
+    };
     class GameEngineMain
     {
     public:
@@ -36,7 +46,13 @@ namespace GameEngine
         std::vector<Entity*> GetEntitiesByTag(std::string tag);
 
         void OnInitialised();
-        bool IsGameOver() const { return m_gameBoard && m_gameBoard->IsGameOver(); }
+    //    bool IsGameOver() const { return m_gameBoard && m_gameBoard->IsGameOver(); }
+
+         //transition between scenes
+        void ChangeSceneState(SceneState newState);
+
+        float GetWindowWidth() { return WINDOW_WIDTH; }
+        float GetWindowHeight() { return WINDOW_HEIGHT; }
 
     private:
         GameEngineMain();
@@ -66,9 +82,11 @@ namespace GameEngine
         sf::RenderTarget* m_renderTarget;
         sf::RenderWindow* m_renderWindow; //In future they will be different						
 
-        Game::GameBoard* m_gameBoard;
         float				m_lastDT;
 
         bool m_windowInitialised;
+
+        Scene* m_currentScene;
+        SceneState m_currentSceneState;
     };
 }
