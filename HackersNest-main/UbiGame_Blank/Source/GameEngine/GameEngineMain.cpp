@@ -49,7 +49,7 @@ void GameEngineMain::OnInitialised()
     //Engine is initialised, this spot should be used for game object and clocks initialisation
     sm_deltaTimeClock.restart();
     sm_gameClock.restart();
-    ChangeSceneState(SceneState::GameBoard_Scene);
+    ChangeSceneState(SceneState::Menu_Scene);
 
 }
 

@@ -13,8 +13,10 @@ namespace GameEngine
 			None = -1,
 			Player = 0,
 			Tileset,
-			BG,
+			BGMenu,
+			BGGame,
 			Particles,
+			Pipe,
 			Count,
 		};
 	}	
@@ -25,8 +27,10 @@ namespace GameEngine
 		{
 		case eTexture::Player:    return "player.png";
 		case eTexture::Tileset:   return "tileset.png";
-		case eTexture::BG:		  return "bg.png";
+		case eTexture::BGMenu:		  return "MenuBG.png";
 		case eTexture::Particles: return "particles.png";
+		case eTexture::BGGame: return "GameBG.png";
+		case eTexture::Pipe:	return "Pipe.png";
 		default:       return "UnknownTexType";
 		}
 	}

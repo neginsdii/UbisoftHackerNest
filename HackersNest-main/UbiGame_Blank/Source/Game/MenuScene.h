@@ -1,6 +1,8 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Scene.h"
+#include "Game/MenuBGEntity.h"
+
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -16,6 +18,7 @@ namespace Game
 		virtual void Clean() override;
 
 	private:
-	
+		MenuBGEntity* m_menuBG;
+
 	};
 }

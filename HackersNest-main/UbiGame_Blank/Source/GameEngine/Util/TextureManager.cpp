@@ -51,8 +51,10 @@ namespace TextureHelper
         {
         case  GameEngine::eTexture::Player:  return sf::Vector2f(32.f, 32.f);
         case  GameEngine::eTexture::Tileset: return sf::Vector2f(32.f, 32.f);
-        case  GameEngine::eTexture::BG:	     return sf::Vector2f(500.f, 500.f);
-        case  GameEngine::eTexture::Particles: return sf::Vector2f(31.f, 32.f);
+		case  GameEngine::eTexture::BGMenu:	      return sf::Vector2f(816.f, 290.f);
+		case  GameEngine::eTexture::Particles:	 return sf::Vector2f(31.f, 32.f);
+		case  GameEngine::eTexture::BGGame:	     return sf::Vector2f(1609.f, 290.f);
+		case  GameEngine::eTexture::Pipe:		return sf::Vector2f(288.f, 72.f);
         default:							 return sf::Vector2f(-1.f, -1.f);
         }
     }
