@@ -1,6 +1,12 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Scene.h"
+#include "Game/PlayerEntity.h"
+#include "Game/PlatformEntity.h"
+#include "Game/GameBGEntity.h"
+#include "Game/PipeEntity.h"
+#include "Game/RatEntity.h"
+#include "Game/SewageEntity.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -18,19 +24,31 @@ namespace Game
 		virtual void Update() override;
 		virtual void Clean() override;
 		bool IsGameOver() { return false; }
+
 	private:
 
 		PlayerEntity* m_firstPlayer;
 		PlayerEntity* m_secondPlayer;
 
-		void CreateLevelBackground();
-		void UpdateLevelBackground();
+		PlatformEntity* m_firstFloor;
+		PlatformEntity* m_SecondFloor;
 
+		GameBGEntity* m_firstPlayerBG;
+		GameBGEntity* m_secondPlayerBG;
+		SewageEntity* m_secondSewage;
+
+		void CreateLevelBackground();
 	
 		void CreatePipes();
-		void SpawnPipes(sf::Vector2f pos, PlayerEntity* pl);
-		void UpdatePipes();
+		std::vector<GameEngine::Entity*> m_firstPipes;
+		std::vector<GameEngine::Entity*> m_secondPipes;
 
+		float m_ratRespawnTime;
+		float m_maxRatRespawnTime;
+
+		void SpawnRats();
+		void UpdateRats();
+		std::vector<RatEntity*> m_vFirstRats;
 
 
 	};

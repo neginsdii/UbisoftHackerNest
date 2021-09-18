@@ -17,7 +17,7 @@ namespace GameEngine
 			PlayerDie,
 			PlayerJump,
 			Fume,
-			Fire,
+			Sewage,
 			Rat,
 			None,
 		};

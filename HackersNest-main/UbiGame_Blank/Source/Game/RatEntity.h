@@ -1,18 +1,20 @@
 #pragma once
+#pragma once
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "GameEngine/EntitySystem/Components/CollidablePhysicsComponent.h"
-#include "Game/PlayerMovement.h"
+#include "Game/RatMovement.h"
+
 
 namespace Game
 {
 
-	class PlayerEntity : public GameEngine::Entity
+	class RatEntity : public GameEngine::Entity
 	{
 	public:
-		PlayerEntity();
-		~PlayerEntity();
+		RatEntity();
+		~RatEntity();
 
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;
@@ -21,7 +23,7 @@ namespace Game
 
 		GameEngine::SpriteRenderComponent* m_renderComponent;
 		GameEngine::AnimationComponent* m_animationComponent;
-		PlayerMovement* m_playerMovement;
+		RatMovement* m_ratMovement;
 
 	};
 }

@@ -179,13 +179,19 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.cpp" />
     <ClCompile Include="Source\GameEngine\Util\CollisionManager.cpp" />
     <ClCompile Include="Source\GameEngine\Util\SoundManager.cpp" />
+    <ClCompile Include="Source\Game\GameBGEntity.cpp" />
     <ClCompile Include="Source\Game\GameBoard.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\RenderComponent.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Component.cpp" />
     <ClCompile Include="Source\Game\MenuBGEntity.cpp" />
     <ClCompile Include="Source\Game\MenuScene.cpp" />
+    <ClCompile Include="Source\Game\PipeEntity.cpp" />
     <ClCompile Include="Source\Game\PlatformEntity.cpp" />
     <ClCompile Include="Source\Game\PlayerEntity.cpp" />
+    <ClCompile Include="Source\Game\PlayerMovement.cpp" />
+    <ClCompile Include="Source\Game\RatEntity.cpp" />
+    <ClCompile Include="Source\Game\RatMovement.cpp" />
+    <ClCompile Include="Source\Game\SewageEntity.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Entity.cpp" />
     <ClCompile Include="Source\GameEngine\GameEngineMain.cpp" />
@@ -207,6 +213,7 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.h" />
     <ClInclude Include="Source\GameEngine\Util\CollisionManager.h" />
     <ClInclude Include="Source\GameEngine\Util\SoundManager.h" />
+    <ClInclude Include="Source\Game\GameBGEntity.h" />
     <ClInclude Include="Source\Game\GameBoard.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\RenderComponent.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Component.h" />
@@ -216,8 +223,13 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\SpriteRenderComponent.h" />
     <ClInclude Include="Source\Game\MenuBGEntity.h" />
     <ClInclude Include="Source\Game\MenuScene.h" />
+    <ClInclude Include="Source\Game\PipeEntity.h" />
     <ClInclude Include="Source\Game\PlatformEntity.h" />
     <ClInclude Include="Source\Game\PlayerEntity.h" />
+    <ClInclude Include="Source\Game\PlayerMovement.h" />
+    <ClInclude Include="Source\Game\RatEntity.h" />
+    <ClInclude Include="Source\Game\RatMovement.h" />
+    <ClInclude Include="Source\Game\SewageEntity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

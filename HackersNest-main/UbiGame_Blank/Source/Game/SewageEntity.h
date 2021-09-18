@@ -2,17 +2,16 @@
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
-#include "GameEngine/EntitySystem/Components/CollidablePhysicsComponent.h"
-#include "Game/PlayerMovement.h"
+#include "GameEngine/EntitySystem/Components/CollidableComponent.h"
 
 namespace Game
 {
 
-	class PlayerEntity : public GameEngine::Entity
+	class SewageEntity : public GameEngine::Entity
 	{
 	public:
-		PlayerEntity();
-		~PlayerEntity();
+		SewageEntity();
+		~SewageEntity();
 
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;
@@ -21,7 +20,6 @@ namespace Game
 
 		GameEngine::SpriteRenderComponent* m_renderComponent;
 		GameEngine::AnimationComponent* m_animationComponent;
-		PlayerMovement* m_playerMovement;
 
 	};
 }

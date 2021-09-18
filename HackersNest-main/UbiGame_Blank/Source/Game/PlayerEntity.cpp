@@ -3,7 +3,7 @@ using namespace Game;
 
 PlayerEntity::PlayerEntity()
 {
-	//m_playerMovement = AddComponent<PlayerMovement>();
+	m_playerMovement = AddComponent<PlayerMovement>();
 
 	m_renderComponent = AddComponent<GameEngine::SpriteRenderComponent>();
 	m_renderComponent->SetTexture(GameEngine::eTexture::Player);

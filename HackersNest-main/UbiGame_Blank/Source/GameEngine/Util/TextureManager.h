@@ -15,8 +15,11 @@ namespace GameEngine
 			Tileset,
 			BGMenu,
 			BGGame,
+			BGGame2,
 			Particles,
 			Pipe,
+			Sewage,
+			Rat,
 			Count,
 		};
 	}	
@@ -31,6 +34,10 @@ namespace GameEngine
 		case eTexture::Particles: return "particles.png";
 		case eTexture::BGGame: return "GameBG.png";
 		case eTexture::Pipe:	return "Pipe.png";
+		case eTexture::BGGame2:	return "GameBG2.png";
+		case eTexture::Sewage:	return "Sewage.png";
+		case eTexture::Rat:	return "Rat.png";
+
 		default:       return "UnknownTexType";
 		}
 	}

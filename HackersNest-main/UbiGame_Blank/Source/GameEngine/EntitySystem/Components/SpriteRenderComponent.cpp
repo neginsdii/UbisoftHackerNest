@@ -61,6 +61,12 @@ void SpriteRenderComponent::UpdateSpriteParams()
 	}
 }
 
+void SpriteRenderComponent::SetScale(sf::Vector2f scl)
+{
+	m_sprite.setScale(scl);
+
+}
+
 
 void SpriteRenderComponent::UpdateTileRect()
 {

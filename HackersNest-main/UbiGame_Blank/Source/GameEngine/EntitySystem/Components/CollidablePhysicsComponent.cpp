@@ -33,8 +33,8 @@ void CollidablePhysicsComponent::OnRemoveFromWorld()
 
 void CollidablePhysicsComponent::Update()
 {
-	//For the time being just a simple intersection check that moves the entity out of all potential intersect boxes
 	std::vector<CollidableComponent*>& collidables = CollisionManager::GetInstance()->GetCollidables();
+	bool collision = false;
 
 	for (int a = 0; a < collidables.size(); ++a)
 	{
@@ -47,23 +47,28 @@ void CollidablePhysicsComponent::Update()
 		AABBRect colideBox = colComponent->GetWorldAABB();
 		if (myBox.intersects(colideBox, intersection))
 		{
+			collision = true;
+			if (colComponent->GetEntity()->GetEntityTag() == "Platform")
+				this->isColliding = true;
 			sf::Vector2f pos = GetEntity()->GetPos();
-			if (intersection.width < intersection.height)
+			/*if (intersection.width < intersection.height)
 			{
 				if (myBox.left < colideBox.left)
 					pos.x -= intersection.width;
 				else
 					pos.x += intersection.width;
-			}
+			}*/
+			/*else
+			{*/
+			if (myBox.top < colideBox.top)
+				pos.y -= intersection.height;
 			else
-			{
-				if (myBox.top < colideBox.top)
-					pos.y -= intersection.height;
-				else
-					pos.y += intersection.height;
-			}
+				pos.y += intersection.height;
+			//	}
 
 			GetEntity()->SetPos(pos);
 		}
 	}
+	if (!collision)
+		this->isColliding = false;
 }

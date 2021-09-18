@@ -26,7 +26,7 @@ void AnimationManager::InitStaticGameAnimations()
 			eTexture::Player,
 			sf::Vector2i(0, 5),
 			4,
-			3)
+		4)
 	);
 
 	m_animDefinitions.push_back
@@ -67,35 +67,27 @@ void AnimationManager::InitStaticGameAnimations()
 			6,
 			3)
 	);
-	//m_animDefinitions.push_back
-	//(
-	//	SAnimationDefinition(
-	//		EAnimationId::Fume,
-	//		eTexture::Fume,
-	//		sf::Vector2i(0, 0),
-	//		9,
-	//		9)
-	//);
 
-	//m_animDefinitions.push_back
-	//(
-	//	SAnimationDefinition(
-	//		EAnimationId::Fire,
-	//		eTexture::Fire,
-	//		sf::Vector2i(0, 0),
-	//		4,
-	//		4)
-	//);
 
-	//m_animDefinitions.push_back
-	//(
-	//	SAnimationDefinition(
-	//		EAnimationId::Rat,
-	//		eTexture::Rat,
-	//		sf::Vector2i(0, 0),
-	//		3,
-	//		3)
-	//);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::Sewage,
+			eTexture::Sewage,
+			sf::Vector2i(0, 0),
+			9,
+			4)
+	);
+
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::Rat,
+			eTexture::Rat,
+			sf::Vector2i(0, 0),
+			3,
+			3)
+	);
 }
 
 
