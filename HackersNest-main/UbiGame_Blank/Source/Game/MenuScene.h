@@ -2,6 +2,7 @@
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Scene.h"
 #include "Game/MenuBGEntity.h"
+#include "Game/PlayerEntity.h"
 
 #include <SFML/System/Vector2.hpp>
 #include <vector>
@@ -19,6 +20,7 @@ namespace Game
 
 	private:
 		MenuBGEntity* m_menuBG;
+		PlayerEntity* m_Player;
 
 	};
 }

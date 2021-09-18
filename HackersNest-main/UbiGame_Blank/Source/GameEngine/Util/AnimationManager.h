@@ -11,13 +11,17 @@ namespace GameEngine
 	{
 		enum type
 		{
-			BirdIdle,
-			BirdFly,
-			Smoke,
+			PlayerIdle,
+			PlayerWalk,
+			PlayerAttack,
+			PlayerDie,
+			PlayerJump,
+			Fume,
+			Fire,
+			Rat,
 			None,
 		};
 	}
-
 	class AnimationManager
 	{
 	public:		

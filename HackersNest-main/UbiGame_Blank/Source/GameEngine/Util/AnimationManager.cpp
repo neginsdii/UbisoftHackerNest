@@ -22,32 +22,80 @@ void AnimationManager::InitStaticGameAnimations()
 	m_animDefinitions.push_back
 	(
 		SAnimationDefinition(
-			EAnimationId::BirdIdle,
+			EAnimationId::PlayerIdle,
 			eTexture::Player,
-			sf::Vector2i(0, 0),
-			10,
+			sf::Vector2i(0, 5),
+			4,
 			3)
 	);
 
 	m_animDefinitions.push_back
 	(
 		SAnimationDefinition(
-			EAnimationId::BirdFly,
+			EAnimationId::PlayerWalk,
 			eTexture::Player,
-			sf::Vector2i(0, 1),
-			10,
+			sf::Vector2i(0, 0),
+			8,
+			6)
+	);
+
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::PlayerAttack,
+			eTexture::Player,
+			sf::Vector2i(0, 2),
+			8,
 			15)
 	);
 
 	m_animDefinitions.push_back
 	(
 		SAnimationDefinition(
-			EAnimationId::Smoke,
-			eTexture::Particles,
-			sf::Vector2i(0, 0),
-			10,
+			EAnimationId::PlayerDie,
+			eTexture::Player,
+			sf::Vector2i(0, 4),
+			9,
 			15)
 	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::PlayerJump,
+			eTexture::Player,
+			sf::Vector2i(0, 3),
+			6,
+			3)
+	);
+	//m_animDefinitions.push_back
+	//(
+	//	SAnimationDefinition(
+	//		EAnimationId::Fume,
+	//		eTexture::Fume,
+	//		sf::Vector2i(0, 0),
+	//		9,
+	//		9)
+	//);
+
+	//m_animDefinitions.push_back
+	//(
+	//	SAnimationDefinition(
+	//		EAnimationId::Fire,
+	//		eTexture::Fire,
+	//		sf::Vector2i(0, 0),
+	//		4,
+	//		4)
+	//);
+
+	//m_animDefinitions.push_back
+	//(
+	//	SAnimationDefinition(
+	//		EAnimationId::Rat,
+	//		eTexture::Rat,
+	//		sf::Vector2i(0, 0),
+	//		3,
+	//		3)
+	//);
 }
 
 

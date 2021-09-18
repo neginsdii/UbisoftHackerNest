@@ -82,7 +82,7 @@ namespace GameEngine
         sf::RenderTarget* m_renderTarget;
         sf::RenderWindow* m_renderWindow; //In future they will be different						
 
-        float				m_lastDT;
+        float	m_lastDT;
 
         bool m_windowInitialised;
 

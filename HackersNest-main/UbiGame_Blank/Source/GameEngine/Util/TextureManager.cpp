@@ -49,7 +49,7 @@ namespace TextureHelper
     {
         switch (texture)
         {
-        case  GameEngine::eTexture::Player:  return sf::Vector2f(32.f, 32.f);
+		case  GameEngine::eTexture::Player:		return sf::Vector2f(16.f, 27.f);
         case  GameEngine::eTexture::Tileset: return sf::Vector2f(32.f, 32.f);
 		case  GameEngine::eTexture::BGMenu:	      return sf::Vector2f(816.f, 290.f);
 		case  GameEngine::eTexture::Particles:	 return sf::Vector2f(31.f, 32.f);
