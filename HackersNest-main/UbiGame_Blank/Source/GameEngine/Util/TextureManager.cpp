@@ -61,6 +61,9 @@ namespace TextureHelper
 		case  GameEngine::eTexture::Bridge:   return sf::Vector2f(96.f, 27.f);
 		case  GameEngine::eTexture::ValidBridge:   return sf::Vector2f(96.f, 27.f);
 		case  GameEngine::eTexture::InvalidBridge:   return sf::Vector2f(96.f, 27.f);
+		case  GameEngine::eTexture::Trap:   return sf::Vector2f(36.f, 51.f);
+		case  GameEngine::eTexture::ValidTrap:   return sf::Vector2f(36.f, 51.f);
+		case  GameEngine::eTexture::InvalidTrap:   return sf::Vector2f(36.f, 51.f);
 
 		default:							 return sf::Vector2f(-1.f, -1.f);
         }

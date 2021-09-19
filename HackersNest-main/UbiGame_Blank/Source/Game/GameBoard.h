@@ -7,9 +7,12 @@
 #include "Game/PipeEntity.h"
 #include "Game/RatEntity.h"
 #include "Game/SewageEntity.h"
-#include "Game/BridgeEntity.h"
-#include "Game/InvalidBridgeEntity.h"
-#include "Game/ValidBridgeEntity.h"
+#include "Game/Bridges/BridgeEntity.h"
+#include "Game/Bridges/InvalidBridgeEntity.h"
+#include "Game/Bridges/ValidBridgeEntity.h"
+#include "Game/Traps/TrapEntity.h"
+#include "Game/Traps/ValidTrapEntity.h"
+#include "Game/Traps/InvalidTrapEntity.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -58,6 +61,16 @@ namespace Game
 		void UpdateBridges();
 		InvalidBridgeEntity* m_invalidBridge;
 		ValidBridgeEntity* m_validBridge;
+
+		static int m_numOfTraps;
+		std::vector<TrapEntity*> m_vTraps;
+		std::vector<sf::Vector2f> m_vTrapsPoses;
+		InvalidTrapEntity* m_invalidTrap;
+		ValidTrapEntity* m_validTrap;
+		void InitPoses();
+		void UpdateTraps();
+		sf::Vector2f FindClosetTrapLocation();
+		bool IsTrapSet(sf::Vector2f point);
 	};
 }
 

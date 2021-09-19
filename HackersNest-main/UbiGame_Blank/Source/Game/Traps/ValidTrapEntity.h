@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
@@ -7,11 +6,11 @@
 
 namespace Game
 {
-	class ValidBridgeEntity : public GameEngine::Entity
+	class ValidTrapEntity : public GameEngine::Entity
 	{
 	public:
-		ValidBridgeEntity();
-		~ValidBridgeEntity();
+		ValidTrapEntity();
+		~ValidTrapEntity();
 
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;

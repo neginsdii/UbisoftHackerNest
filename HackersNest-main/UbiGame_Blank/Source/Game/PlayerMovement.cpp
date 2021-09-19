@@ -13,7 +13,7 @@ PlayerMovement::PlayerMovement()
 	, m_renderComponent(nullptr)
 	, isRunning(false)
 	, isJumping(true)
-	, m_playerSpeed(30.0f)
+	, m_playerSpeed(50.0f)
 	, m_playerValocity(0.0f, 0.0f)
 	, m_gravity(9.8f)
 	, m_direction(1.0f, 1.0f)
@@ -114,8 +114,7 @@ void PlayerMovement::Jump()
 			}
 		}
 		isRunning = true;
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && GetEntity()->GetEntityTag() == "SecondPlayer")
-			|| ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) && GetEntity()->GetEntityTag() == "FirstPlayer"))) {
+		if  ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) && GetEntity()->GetEntityTag() == "FirstPlayer")) {
 			if (!isJumping) {
 				m_gravity *= -1;
 				m_renderComponent->SetScale(sf::Vector2f(m_renderComponent->GetScale().x,-1*m_renderComponent->GetScale().y));

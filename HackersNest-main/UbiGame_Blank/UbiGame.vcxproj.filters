@@ -114,13 +114,22 @@
     <ClCompile Include="Source\Game\RatMovement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\BridgeEntity.cpp">
+    <ClCompile Include="Source\Game\Traps\TrapEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\InvalidBridgeEntity.cpp">
+    <ClCompile Include="Source\Game\Traps\ValidTrapEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\ValidBridgeEntity.cpp">
+    <ClCompile Include="Source\Game\Traps\InvalidTrapEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bridges\BridgeEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bridges\ValidBridgeEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bridges\InvalidBridgeEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -218,13 +227,22 @@
     <ClInclude Include="Source\Game\RatMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\BridgeEntity.h">
+    <ClInclude Include="Source\Game\Traps\TrapEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\InvalidBridgeEntity.h">
+    <ClInclude Include="Source\Game\Traps\ValidTrapEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\ValidBridgeEntity.h">
+    <ClInclude Include="Source\Game\Traps\InvalidTrapEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bridges\BridgeEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bridges\ValidBridgeEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bridges\InvalidBridgeEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

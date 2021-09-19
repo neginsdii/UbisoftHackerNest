@@ -5,7 +5,7 @@
 #include <cmath>
 using namespace Game;
 int GameBoard::m_numOfBridges = 2;
-
+int GameBoard::m_numOfTraps = 0;
 GameBoard::GameBoard()
 	:m_firstPlayer(nullptr)
 	, m_secondPlayer(nullptr)
@@ -26,7 +26,8 @@ GameBoard::GameBoard()
 	m_secondPlayer->SetPos(sf::Vector2f(100.0f, 650.0f));
 	m_secondPlayer->SetSize(TextureHelper::GetTextureTileSize(GameEngine::eTexture::Player) * 3.0f);
 	m_secondPlayer->SetEntityTag("SecondPlayer");
-
+	
+	InitPoses();
 	
 	CreatePipes();
 
@@ -46,6 +47,7 @@ void GameBoard::Update()
 {
 	SpawnRats();
 	UpdateBridges();
+	UpdateTraps();
 }
 
 void GameBoard::Clean()
@@ -88,6 +90,12 @@ void GameBoard::CreateLevelBackground()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(brg);
 	m_vBridges.push_back(brg);
 
+
+	/*TrapEntity* trp = new TrapEntity();
+	trp->SetPos((sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 13.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f)));
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(trp);
+	m_vTraps.push_back(trp);*/
+
 }
 
 
@@ -106,11 +114,6 @@ void GameBoard::CreatePipes()
 		pipe->SetSize(sf::Vector2f(size.x, size.y));
 		m_firstPipes.push_back(pipe);
 
-		PipeEntity* pipe1 = new PipeEntity();
-		GameEngine::GameEngineMain::GetInstance()->AddEntity(pipe1);
-		pipe1->SetPos(sf::Vector2f(size.x / 2 + i * size.x, 423.0f));
-		pipe1->SetSize(sf::Vector2f(size.x, size.y));
-		m_secondPipes.push_back(pipe1);
 	}
 }
 
@@ -200,7 +203,7 @@ void GameBoard::UpdateBridges()
 				}
 			}
 				
-			if (m_validBridge)
+			if (m_validBridge )
 			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_secondPlayer->GetEntityTag() == "SecondPlayer")
 				{
@@ -215,5 +218,118 @@ void GameBoard::UpdateBridges()
 				}
 			}
 	}
+	else
+	{
+		if (m_validBridge)
+		{
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_validBridge);
+			m_validBridge = nullptr;
+		}
+		if (m_invalidBridge)
+		{
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_invalidBridge);
+			m_invalidBridge = nullptr;
+		}
+	}
 
 }
+
+void GameBoard::InitPoses()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		m_vTrapsPoses.push_back(sf::Vector2f(i * 300 + GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 12.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f));
+	}
+}
+
+sf::Vector2f GameBoard::FindClosetTrapLocation()
+{
+	sf::Vector2f closetPoint;
+	float minVal = 5000.0f;
+	for (int i = 0; i < 4; i++)
+	{
+		float dis = sqrt(pow((m_firstPlayer->GetPos().x - m_vTrapsPoses[i].x), 2) + pow((m_firstPlayer->GetPos().y - m_vTrapsPoses[i].y), 2));
+		if (dis < minVal)
+		{
+			minVal=dis;
+			closetPoint = m_vTrapsPoses[i];
+		}
+	}
+	return closetPoint;
+}
+
+bool Game::GameBoard::IsTrapSet(sf::Vector2f point)
+{
+	bool flg = false;
+	
+		for (int j = 0; j < m_vTraps.size(); j++)
+		{
+			if (m_vTraps[j]->GetPos() == point)
+				flg = true;
+		}
+
+	return flg;
+}
+
+void GameBoard::UpdateTraps()
+{
+	
+		sf::Vector2f closetPoint=FindClosetTrapLocation();
+		float dis = sqrt(pow((m_firstPlayer->GetPos().x - closetPoint.x), 2) + pow((m_firstPlayer->GetPos().y - closetPoint.y), 2));
+		if (dis < 150.0f)
+		{
+			if (m_numOfTraps <= 4)
+			{
+				if (m_invalidTrap) {
+					GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_invalidTrap);
+					m_invalidTrap = nullptr;
+				}
+				else if (!m_validTrap) {
+					if (!IsTrapSet(closetPoint)) {
+						m_validTrap = new ValidTrapEntity();
+						m_validTrap->SetPos((sf::Vector2f(closetPoint.x, closetPoint.y)));
+						GameEngine::GameEngineMain::GetInstance()->AddEntity(m_validTrap);
+					}
+				}
+			}
+			else
+			{
+				if (!m_invalidTrap) {
+					m_invalidTrap = new InvalidTrapEntity();
+					m_invalidTrap->SetPos((sf::Vector2f(closetPoint.x, closetPoint.y)));
+					GameEngine::GameEngineMain::GetInstance()->AddEntity(m_invalidTrap);
+				}
+			}
+
+			if (m_validTrap )
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && m_firstPlayer->GetEntityTag() == "FirstPlayer")
+				{
+					TrapEntity* trp = new TrapEntity();
+					trp->SetPos(m_validTrap->GetPos());
+					GameEngine::GameEngineMain::GetInstance()->AddEntity(trp);
+					m_vTraps.push_back(trp);
+					m_numOfTraps++;
+					GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_validTrap);
+					m_validTrap = nullptr;
+
+				}
+			}
+		}
+		
+		else
+		{
+			if (m_validTrap)
+			{
+				GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_validTrap);
+				m_validTrap = nullptr;
+			}
+			if (m_invalidTrap)
+			{
+				GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_invalidTrap);
+				m_invalidTrap = nullptr;
+			}
+		}
+
+}
+

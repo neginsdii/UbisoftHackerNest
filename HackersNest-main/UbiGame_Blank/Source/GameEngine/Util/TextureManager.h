@@ -23,6 +23,9 @@ namespace GameEngine
 			Bridge,
 			ValidBridge,
 			InvalidBridge,
+			Trap,
+			ValidTrap,
+			InvalidTrap,
 			Count,
 		};
 	}	
@@ -43,6 +46,9 @@ namespace GameEngine
 		case eTexture::Bridge:	return "Bridge.png";
 		case eTexture::ValidBridge:	return "ValidBridge.png";
 		case eTexture::InvalidBridge:	return "InvalidBridge.png";
+		case eTexture::Trap:	return "Trap.png";
+		case eTexture::ValidTrap:	return "ValidTrap.png";
+		case eTexture::InvalidTrap:	return "InvalidTrap.png";
 
 		default:       return "UnknownTexType";
 		}
