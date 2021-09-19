@@ -12,12 +12,13 @@ int GameBoard::ms_numOfWoods=0;
 GameBoard::GameBoard()
 	:m_firstPlayer(nullptr)
 	, m_secondPlayer(nullptr)
-	,m_invalidBridge(nullptr)
-	,m_validBridge(nullptr)
-	,m_hud(nullptr)
-	,m_wood(nullptr)
-	,m_box(nullptr)
-	,m_sound(nullptr)
+	, m_invalidBridge(nullptr)
+	, m_validBridge(nullptr)
+	, m_hud(nullptr)
+	, m_wood(nullptr)
+	, m_box(nullptr)
+	, m_sound(nullptr)
+	, m_door(nullptr)
 
 {
 	CreateLevelBackground();
@@ -41,6 +42,7 @@ GameBoard::GameBoard()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_sound);
 	InitPoses();
 	
+
 	CreatePipes();
 	CreateHealthUI();
 
@@ -62,10 +64,12 @@ void GameBoard::Update()
 	UpdateBridges();
 	UpdateTraps();
 	UpdatePlayers();
+	int tmpVal = 0;
 	if (ms_numOfWoods / 4 > 0) {
-		m_numOfBridges += ms_numOfWoods / 4;
-		ms_numOfWoods -= (ms_numOfWoods/4);
+		tmpVal = ms_numOfWoods / 4;
+		ms_numOfWoods -= (tmpVal* 4);
 	}
+	m_numOfBridges += tmpVal;
 	m_hud->SetText(m_numOfBridges, ms_numOfWoods);
 }
 
@@ -228,7 +232,7 @@ void GameBoard::UpdateRats()
 			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(rat);
 			it = m_vFirstRats.erase(it);
 		}
-		if (!rat->GetIsActive())
+		else if (!rat->GetIsActive())
 		{
 			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(rat);
 			it = m_vFirstRats.erase(it);

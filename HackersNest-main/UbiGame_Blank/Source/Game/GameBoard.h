@@ -18,6 +18,7 @@
 #include "Game/HUD/WoodEntity.h"
 #include "Game/HUD/BoxEntity.h"
 #include "Game/HUD/SoundEntity.h"
+#include "Game/DoorEntity.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -94,6 +95,8 @@ namespace Game
 		static int ms_numOfWoods;
 
 		SoundEntity* m_sound;
+
+		DoorEntity* m_door;
 	};
 }
 

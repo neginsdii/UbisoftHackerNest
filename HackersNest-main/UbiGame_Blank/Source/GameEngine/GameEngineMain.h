@@ -39,7 +39,7 @@ namespace GameEngine
 
         void AddEntity(Entity* entity);
         void RemoveEntity(Entity* entity);
-
+        void RemoveAllEntities();
         void RefreshEntityTag(Entity* entity);
         void RemoveEntityTagFromMap(Entity* entity, std::string tag);
 

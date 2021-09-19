@@ -49,7 +49,7 @@ void GameEngineMain::OnInitialised()
     //Engine is initialised, this spot should be used for game object and clocks initialisation
     sm_deltaTimeClock.restart();
     sm_gameClock.restart();
-    ChangeSceneState(SceneState::GameBoard_Scene);
+    ChangeSceneState(SceneState::GameBoard_Scene );
 
 }
 
@@ -94,6 +94,14 @@ void GameEngineMain::RemoveEntity(Entity* entity)
     {
         m_entitiesToRemove.push_back(entity);
         entity->OnRemoveFromWorld();
+    }
+}
+
+void GameEngineMain::RemoveAllEntities()
+{
+    for (std::vector<Entity*>::iterator it = m_entities.begin(); it != m_entities.end();)
+    {
+        
     }
 }
 

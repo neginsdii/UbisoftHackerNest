@@ -31,7 +31,7 @@ void HUDEntity::OnRemoveFromWorld()
 void HUDEntity::SetText(int txt, int wood)
 {
 	std::string timeToShow;
-	timeToShow.append("Boxes: " + std::to_string(txt) +"\nWoods: "+ std::to_string(wood));
+	timeToShow.append("Boxes: " + std::to_string(txt) +"\nSticks: "+ std::to_string(wood));
 	m_textRendererComponent->SetString(timeToShow);
 
 
