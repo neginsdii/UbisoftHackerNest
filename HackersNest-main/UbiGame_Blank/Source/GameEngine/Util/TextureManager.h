@@ -20,6 +20,9 @@ namespace GameEngine
 			Pipe,
 			Sewage,
 			Rat,
+			Bridge,
+			ValidBridge,
+			InvalidBridge,
 			Count,
 		};
 	}	
@@ -37,6 +40,9 @@ namespace GameEngine
 		case eTexture::BGGame2:	return "GameBG2.png";
 		case eTexture::Sewage:	return "Sewage.png";
 		case eTexture::Rat:	return "Rat.png";
+		case eTexture::Bridge:	return "Bridge.png";
+		case eTexture::ValidBridge:	return "ValidBridge.png";
+		case eTexture::InvalidBridge:	return "InvalidBridge.png";
 
 		default:       return "UnknownTexType";
 		}

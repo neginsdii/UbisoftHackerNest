@@ -41,7 +41,9 @@ void CollidablePhysicsComponent::Update()
 		CollidableComponent* colComponent = collidables[a];
 		if (colComponent == this)
 			continue;
-
+		if ((colComponent->GetEntity()->GetEntityTag() == "Rat" && this->GetEntity()->GetEntityTag() == "FirstPlayer") ||
+			(colComponent->GetEntity()->GetEntityTag() == "FirstPlayer" && this->GetEntity()->GetEntityTag() == "Rat"))
+			continue;
 		AABBRect intersection;
 		AABBRect myBox = GetWorldAABB();
 		AABBRect colideBox = colComponent->GetWorldAABB();

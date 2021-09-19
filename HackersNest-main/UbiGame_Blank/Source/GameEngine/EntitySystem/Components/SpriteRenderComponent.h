@@ -18,6 +18,8 @@ namespace GameEngine
 		virtual void OnAddToWorld() override;
 
 		void SetTexture(eTexture::type texture);
+		eTexture::type GetTexture() const { return m_texture; }
+
 		void SetTileIndex(sf::Vector2i vect) { m_tileIndex = vect; }
 		void SetTileIndex(int xIdx, int yIdx) { m_tileIndex = sf::Vector2i(xIdx, yIdx); }
 

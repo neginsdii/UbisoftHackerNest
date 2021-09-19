@@ -1,12 +1,16 @@
 #include "GameBoard.h"
 #include "GameEngine/GameEngineMain.h"
 #include <time.h> 
-
+#include <SFML/Window/Keyboard.hpp>
+#include <cmath>
 using namespace Game;
+int GameBoard::m_numOfBridges = 2;
 
 GameBoard::GameBoard()
 	:m_firstPlayer(nullptr)
 	, m_secondPlayer(nullptr)
+	,m_invalidBridge(nullptr)
+	,m_validBridge(nullptr)
 	
 {
 	CreateLevelBackground();
@@ -23,6 +27,7 @@ GameBoard::GameBoard()
 	m_secondPlayer->SetSize(TextureHelper::GetTextureTileSize(GameEngine::eTexture::Player) * 3.0f);
 	m_secondPlayer->SetEntityTag("SecondPlayer");
 
+	
 	CreatePipes();
 
 }
@@ -40,7 +45,7 @@ void GameBoard::Start()
 void GameBoard::Update()
 {
 	SpawnRats();
-
+	UpdateBridges();
 }
 
 void GameBoard::Clean()
@@ -70,13 +75,18 @@ void GameBoard::CreateLevelBackground()
 	m_firstFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 2.0f - 90.0f));
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_firstFloor);
 
-	m_SecondFloor = new PlatformEntity();
-	m_SecondFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 40.0f));
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_SecondFloor);
+	/*m_SecondFloor = new PlatformEntity();
+	m_SecondFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f));
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_SecondFloor);*/
 
 	m_secondSewage = new SewageEntity();
 	m_secondSewage->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 3.0f + 290.0f));
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_secondSewage);
+
+	BridgeEntity* brg = new BridgeEntity();
+	brg->SetPos((sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 13.0f, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f)));
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(brg);
+	m_vBridges.push_back(brg);
 
 }
 
@@ -158,6 +168,52 @@ void GameBoard::UpdateRats()
 			it++;
 
 		}
+	}
+
+}
+
+void GameBoard::UpdateBridges()
+{
+	sf::Vector2f size = sf::Vector2f(96.f, 27.f);
+	
+	auto tmp = m_vBridges.back();
+	sf::Vector2f posBrg = m_vBridges.back()->GetPos();
+	if ((  posBrg.x- m_secondPlayer->GetPos().x) < 10.0f)
+	{
+			if (m_numOfBridges > 0) {
+				if (m_invalidBridge) {
+					GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_invalidBridge);
+					m_invalidBridge = nullptr;
+				}
+				if (!m_validBridge) {
+					
+					m_validBridge = new ValidBridgeEntity();
+					m_validBridge->SetPos((sf::Vector2f(m_vBridges.back()->GetPos().x + size.x, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f)));
+					GameEngine::GameEngineMain::GetInstance()->AddEntity(m_validBridge);
+				}
+			}
+			else {
+				if (!m_invalidBridge) {
+					m_invalidBridge = new InvalidBridgeEntity();
+					m_invalidBridge->SetPos((sf::Vector2f(m_vBridges.back()->GetPos().x + size.x, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f)));
+					GameEngine::GameEngineMain::GetInstance()->AddEntity(m_invalidBridge);
+				}
+			}
+				
+			if (m_validBridge)
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_secondPlayer->GetEntityTag() == "SecondPlayer")
+				{
+					BridgeEntity* brg = new BridgeEntity();
+					brg->SetPos(m_validBridge->GetPos());
+					GameEngine::GameEngineMain::GetInstance()->AddEntity(brg);
+					m_vBridges.push_back(brg);
+					m_numOfBridges--;
+					GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_validBridge);
+					m_validBridge = nullptr;
+
+				}
+			}
 	}
 
 }

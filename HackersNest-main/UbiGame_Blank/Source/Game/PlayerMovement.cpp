@@ -102,7 +102,7 @@ void PlayerMovement::OnAddToWorld()
 void PlayerMovement::Jump()
 {
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
-
+	
 	if (GetEntity()->GetComponent<GameEngine::CollidablePhysicsComponent>()->CheckCollision()) {
 		//	m_playerValocity.y = 0.0f;
 		if (isJumping)

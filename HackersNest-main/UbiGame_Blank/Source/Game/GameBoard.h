@@ -7,6 +7,9 @@
 #include "Game/PipeEntity.h"
 #include "Game/RatEntity.h"
 #include "Game/SewageEntity.h"
+#include "Game/BridgeEntity.h"
+#include "Game/InvalidBridgeEntity.h"
+#include "Game/ValidBridgeEntity.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -50,7 +53,11 @@ namespace Game
 		void UpdateRats();
 		std::vector<RatEntity*> m_vFirstRats;
 
-
+		std::vector<BridgeEntity*> m_vBridges;
+		static int m_numOfBridges;
+		void UpdateBridges();
+		InvalidBridgeEntity* m_invalidBridge;
+		ValidBridgeEntity* m_validBridge;
 	};
 }
 

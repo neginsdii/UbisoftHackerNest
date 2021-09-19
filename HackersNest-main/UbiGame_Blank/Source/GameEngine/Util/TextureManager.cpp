@@ -58,8 +58,11 @@ namespace TextureHelper
 		case  GameEngine::eTexture::Sewage:		  return sf::Vector2f(1609.f, 290.f);
 		case  GameEngine::eTexture::Pipe:		return sf::Vector2f(288.f, 72.f);
 		case  GameEngine::eTexture::Rat:   return sf::Vector2f(65.f, 27.f);
+		case  GameEngine::eTexture::Bridge:   return sf::Vector2f(96.f, 27.f);
+		case  GameEngine::eTexture::ValidBridge:   return sf::Vector2f(96.f, 27.f);
+		case  GameEngine::eTexture::InvalidBridge:   return sf::Vector2f(96.f, 27.f);
 
-        default:							 return sf::Vector2f(-1.f, -1.f);
+		default:							 return sf::Vector2f(-1.f, -1.f);
         }
     }
 }

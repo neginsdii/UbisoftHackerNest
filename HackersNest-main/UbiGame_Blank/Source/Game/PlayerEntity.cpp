@@ -7,7 +7,7 @@ PlayerEntity::PlayerEntity()
 
 	m_renderComponent = AddComponent<GameEngine::SpriteRenderComponent>();
 	m_renderComponent->SetTexture(GameEngine::eTexture::Player);
-	m_renderComponent->SetZLevel(3);
+	m_renderComponent->SetZLevel(5);
 
 	m_animationComponent = AddComponent<GameEngine::AnimationComponent>();
 

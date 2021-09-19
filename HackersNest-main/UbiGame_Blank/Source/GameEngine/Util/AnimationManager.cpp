@@ -86,7 +86,7 @@ void AnimationManager::InitStaticGameAnimations()
 			eTexture::Rat,
 			sf::Vector2i(0, 0),
 			3,
-			3)
+			6)
 	);
 }
 
