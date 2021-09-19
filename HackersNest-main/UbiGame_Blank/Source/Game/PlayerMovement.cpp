@@ -13,7 +13,7 @@ PlayerMovement::PlayerMovement()
 	, m_renderComponent(nullptr)
 	, isRunning(false)
 	, isJumping(true)
-	, m_playerSpeed(50.0f)
+	, m_playerSpeed(70.0f)
 	, m_playerValocity(0.0f, 0.0f)
 	, m_gravity(9.8f)
 	, m_direction(1.0f, 1.0f)
@@ -96,7 +96,7 @@ void PlayerMovement::OnAddToWorld()
 {
 	m_animComponent = GetEntity()->GetComponent<GameEngine::AnimationComponent>();
 	m_renderComponent = GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>();
-
+	
 }
 
 void PlayerMovement::Jump()

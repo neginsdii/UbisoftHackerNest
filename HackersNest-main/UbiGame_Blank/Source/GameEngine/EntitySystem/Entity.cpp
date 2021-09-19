@@ -11,6 +11,7 @@ Entity::Entity()
     , m_size(0.f, 0.f)
     , m_rotation(0.f)
     , m_parent(nullptr)
+    , m_isActive(true)
 {
 
 }

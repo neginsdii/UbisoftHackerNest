@@ -2,6 +2,7 @@
 using namespace Game;
 
 PlayerEntity::PlayerEntity()
+	:m_health(3)
 {
 	m_playerMovement = AddComponent<PlayerMovement>();
 

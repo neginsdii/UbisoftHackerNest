@@ -16,12 +16,13 @@ namespace Game
 
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;
-
+		void SetHealth(int val) { m_health = val; }
+		int GetHealth() const { return m_health; }
 	private:
 
 		GameEngine::SpriteRenderComponent* m_renderComponent;
 		GameEngine::AnimationComponent* m_animationComponent;
 		PlayerMovement* m_playerMovement;
-
+		int m_health;
 	};
 }

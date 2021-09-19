@@ -13,6 +13,11 @@
 #include "Game/Traps/TrapEntity.h"
 #include "Game/Traps/ValidTrapEntity.h"
 #include "Game/Traps/InvalidTrapEntity.h"
+#include "Game/HUD/HUDEntity.h"
+#include "Game/HUD/HealthUIEntity.h"
+#include "Game/HUD/WoodEntity.h"
+#include "Game/HUD/BoxEntity.h"
+#include "Game/HUD/SoundEntity.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 namespace Game
@@ -35,6 +40,11 @@ namespace Game
 
 		PlayerEntity* m_firstPlayer;
 		PlayerEntity* m_secondPlayer;
+
+		sf::Vector2f m_spawnPosFirstPlayer;
+		sf::Vector2f m_spawnPosSecondPlayer;
+
+		void UpdatePlayers();
 
 		PlatformEntity* m_firstFloor;
 		PlatformEntity* m_SecondFloor;
@@ -62,6 +72,7 @@ namespace Game
 		InvalidBridgeEntity* m_invalidBridge;
 		ValidBridgeEntity* m_validBridge;
 
+		static int ms_levelTraps;
 		static int m_numOfTraps;
 		std::vector<TrapEntity*> m_vTraps;
 		std::vector<sf::Vector2f> m_vTrapsPoses;
@@ -71,6 +82,18 @@ namespace Game
 		void UpdateTraps();
 		sf::Vector2f FindClosetTrapLocation();
 		bool IsTrapSet(sf::Vector2f point);
+
+		HUDEntity* m_hud;
+		WoodEntity* m_wood;
+		BoxEntity* m_box;
+		std::vector<HealthUIEntity*> m_firstPlayerHealth;
+		std::vector<HealthUIEntity*> m_secondPlayerHealth;
+		void CreateHealthUI();
+
+		static int ms_numOfBoxes;
+		static int ms_numOfWoods;
+
+		SoundEntity* m_sound;
 	};
 }
 

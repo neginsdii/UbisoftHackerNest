@@ -26,6 +26,10 @@ namespace GameEngine
 			Trap,
 			ValidTrap,
 			InvalidTrap,
+			Heart,
+			TrapRange,
+			Wood,
+			Box,
 			Count,
 		};
 	}	
@@ -49,6 +53,10 @@ namespace GameEngine
 		case eTexture::Trap:	return "Trap.png";
 		case eTexture::ValidTrap:	return "ValidTrap.png";
 		case eTexture::InvalidTrap:	return "InvalidTrap.png";
+		case eTexture::Heart:	return "Heart.png";
+		case eTexture::TrapRange:	return "TrapRange.png";
+		case eTexture::Wood:	return "Wood1.png";
+		case eTexture::Box:	return "Box.png";
 
 		default:       return "UnknownTexType";
 		}

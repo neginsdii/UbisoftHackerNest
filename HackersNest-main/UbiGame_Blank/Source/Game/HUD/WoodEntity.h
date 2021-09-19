@@ -1,15 +1,15 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
-#include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
-#include "GameEngine/EntitySystem/Components/CollidableComponent.h"
+
+
 namespace Game
 {
-	class TrapEntity : public GameEngine::Entity
+	class WoodEntity : public GameEngine::Entity
 	{
 	public:
-		TrapEntity();
-		~TrapEntity();
+		WoodEntity();
+		~WoodEntity();
 
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;

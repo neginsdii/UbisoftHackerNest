@@ -64,8 +64,13 @@ namespace TextureHelper
 		case  GameEngine::eTexture::Trap:   return sf::Vector2f(36.f, 51.f);
 		case  GameEngine::eTexture::ValidTrap:   return sf::Vector2f(36.f, 51.f);
 		case  GameEngine::eTexture::InvalidTrap:   return sf::Vector2f(36.f, 51.f);
+		case  GameEngine::eTexture::Heart:   return sf::Vector2f(27.f, 30.f);
+		case  GameEngine::eTexture::TrapRange:   return sf::Vector2f(250.f, 250.f);
+		case  GameEngine::eTexture::Wood:   return sf::Vector2f(28.f, 20.f);
+		case  GameEngine::eTexture::Box:   return sf::Vector2f(19.f, 23.f);
 
 		default:							 return sf::Vector2f(-1.f, -1.f);
         }
     }
+
 }

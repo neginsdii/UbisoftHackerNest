@@ -4,32 +4,45 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
 using namespace Game;
-int GameBoard::m_numOfBridges = 2;
+int GameBoard::m_numOfBridges = 0;
 int GameBoard::m_numOfTraps = 0;
+int GameBoard::ms_levelTraps = 8;
+int GameBoard::ms_numOfBoxes=0;
+int GameBoard::ms_numOfWoods=0;
 GameBoard::GameBoard()
 	:m_firstPlayer(nullptr)
 	, m_secondPlayer(nullptr)
 	,m_invalidBridge(nullptr)
 	,m_validBridge(nullptr)
-	
+	,m_hud(nullptr)
+	,m_wood(nullptr)
+	,m_box(nullptr)
+	,m_sound(nullptr)
+
 {
 	CreateLevelBackground();
 	
 	m_firstPlayer = new PlayerEntity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_firstPlayer);
 	m_firstPlayer->SetPos(sf::Vector2f(100.0f, 240.0f));
+	m_spawnPosFirstPlayer = sf::Vector2f(100.0f, 240.0f);
 	m_firstPlayer->SetSize(TextureHelper::GetTextureTileSize(GameEngine::eTexture::Player) * 3.0f);
 	m_firstPlayer->SetEntityTag("FirstPlayer");
 
 	m_secondPlayer = new PlayerEntity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_secondPlayer);
 	m_secondPlayer->SetPos(sf::Vector2f(100.0f, 650.0f));
+	m_spawnPosSecondPlayer =sf::Vector2f(100.0f, 650.0f);
 	m_secondPlayer->SetSize(TextureHelper::GetTextureTileSize(GameEngine::eTexture::Player) * 3.0f);
 	m_secondPlayer->SetEntityTag("SecondPlayer");
 	
+
+	m_sound = new SoundEntity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_sound);
 	InitPoses();
 	
 	CreatePipes();
+	CreateHealthUI();
 
 }
 
@@ -48,6 +61,12 @@ void GameBoard::Update()
 	SpawnRats();
 	UpdateBridges();
 	UpdateTraps();
+	UpdatePlayers();
+	if (ms_numOfWoods / 4 > 0) {
+		m_numOfBridges += ms_numOfWoods / 4;
+		ms_numOfWoods -= (ms_numOfWoods/4);
+	}
+	m_hud->SetText(m_numOfBridges, ms_numOfWoods);
 }
 
 void GameBoard::Clean()
@@ -58,7 +77,43 @@ void GameBoard::Clean()
 	GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_secondPlayerBG);
 	GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_firstFloor);
 	GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_SecondFloor);
+	GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_hud);
 
+}
+
+void GameBoard::UpdatePlayers()
+{
+	if (!m_firstPlayer->GetIsActive())
+	{
+		if (m_firstPlayer->GetHealth() > 0) {
+			m_firstPlayer->SetHealth(m_firstPlayer->GetHealth() - 1);
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_firstPlayerHealth[m_firstPlayerHealth.size()-1]);
+			m_firstPlayerHealth.pop_back();
+			m_firstPlayer->SetPos(m_spawnPosFirstPlayer);
+			m_firstPlayer->SetIsActive(true);
+		}
+		else
+		{
+			m_firstPlayer->SetPos(sf::Vector2f(-50.0f,100.0f));
+
+		}
+	}
+	if (!m_secondPlayer->GetIsActive())
+	{
+		if (m_secondPlayer->GetHealth() >0) {
+			m_secondPlayer->SetHealth(m_secondPlayer->GetHealth() - 1);
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_secondPlayerHealth[m_secondPlayerHealth.size() - 1]);
+			m_secondPlayerHealth.pop_back();
+			m_secondPlayer->SetPos(m_spawnPosSecondPlayer);
+			m_secondPlayer->SetIsActive(true);
+
+		}
+		else
+		{
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_secondPlayer);
+
+		}
+	}
 }
 
 void GameBoard::CreateLevelBackground()
@@ -77,9 +132,10 @@ void GameBoard::CreateLevelBackground()
 	m_firstFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 2.0f - 90.0f));
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_firstFloor);
 
-	/*m_SecondFloor = new PlatformEntity();
-	m_SecondFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f));
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_SecondFloor);*/
+	m_SecondFloor = new PlatformEntity();
+	m_SecondFloor->SetPos(sf::Vector2f( GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, 5 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 100.0f));
+	m_SecondFloor->SetEntityTag("Sewage");
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_SecondFloor);
 
 	m_secondSewage = new SewageEntity();
 	m_secondSewage->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 2.0f, GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 3.0f + 290.0f));
@@ -95,7 +151,7 @@ void GameBoard::CreateLevelBackground()
 	trp->SetPos((sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 13.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f)));
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(trp);
 	m_vTraps.push_back(trp);*/
-
+	
 }
 
 
@@ -114,6 +170,12 @@ void GameBoard::CreatePipes()
 		pipe->SetSize(sf::Vector2f(size.x, size.y));
 		m_firstPipes.push_back(pipe);
 
+		PipeEntity* pipe1 = new PipeEntity();
+		GameEngine::GameEngineMain::GetInstance()->AddEntity(pipe1);
+		pipe1->SetPos(sf::Vector2f(size.x / 2 + i * size.x, 423.0f));
+		pipe1->SetSize(sf::Vector2f(size.x, size.y));
+		m_secondPipes.push_back(pipe1);
+
 	}
 }
 
@@ -130,7 +192,7 @@ void GameBoard::SpawnRats()
 		if (rnd == 1)
 		{
 			RatEntity* tmpRat = new RatEntity();
-			tmpRat->SetPos(sf::Vector2f(1700.0f, 280.0f));
+			tmpRat->SetPos(sf::Vector2f(1700.0f, 260.0f));
 			tmpRat->SetSize(TextureHelper::GetTextureTileSize(GameEngine::eTexture::Rat));
 			tmpRat->SetEntityTag("Rat");
 			tmpRat->GetComponent<RatMovement>()->SetRatSpeed(ratSpeed);
@@ -165,6 +227,12 @@ void GameBoard::UpdateRats()
 		{
 			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(rat);
 			it = m_vFirstRats.erase(it);
+		}
+		if (!rat->GetIsActive())
+		{
+			GameEngine::GameEngineMain::GetInstance()->RemoveEntity(rat);
+			it = m_vFirstRats.erase(it);
+			ms_numOfWoods++;
 		}
 		else
 		{
@@ -236,9 +304,13 @@ void GameBoard::UpdateBridges()
 
 void GameBoard::InitPoses()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		m_vTrapsPoses.push_back(sf::Vector2f(i * 300 + GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 12.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 6.0f + 20.0f));
+		m_vTrapsPoses.push_back(sf::Vector2f(i * 350 + GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 12.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() /4.0f +45.0f));
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		m_vTrapsPoses.push_back(sf::Vector2f(i * 350 + GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 4.0f, 1 * GameEngine::GameEngineMain::GetInstance()->GetWindowHeight() / 8.0f ));
 	}
 }
 
@@ -246,7 +318,7 @@ sf::Vector2f GameBoard::FindClosetTrapLocation()
 {
 	sf::Vector2f closetPoint;
 	float minVal = 5000.0f;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < ms_levelTraps; i++)
 	{
 		float dis = sqrt(pow((m_firstPlayer->GetPos().x - m_vTrapsPoses[i].x), 2) + pow((m_firstPlayer->GetPos().y - m_vTrapsPoses[i].y), 2));
 		if (dis < minVal)
@@ -258,7 +330,7 @@ sf::Vector2f GameBoard::FindClosetTrapLocation()
 	return closetPoint;
 }
 
-bool Game::GameBoard::IsTrapSet(sf::Vector2f point)
+bool GameBoard::IsTrapSet(sf::Vector2f point)
 {
 	bool flg = false;
 	
@@ -271,14 +343,38 @@ bool Game::GameBoard::IsTrapSet(sf::Vector2f point)
 	return flg;
 }
 
+void GameBoard::CreateHealthUI()
+{
+	sf::Vector2f size = sf::Vector2f(27.f, 30.f);
+	for (int i = 0; i < 3; i++)
+	{
+		HealthUIEntity* hlt = new HealthUIEntity();
+		hlt->SetPos(sf::Vector2f(size.x*i+ 11*GameEngine::GameEngineMain::GetInstance()->GetWindowWidth()/12, 320.0f));
+		GameEngine::GameEngineMain::GetInstance()->AddEntity(hlt);
+		m_firstPlayerHealth.push_back(hlt);
+
+		HealthUIEntity* hlt1 = new HealthUIEntity();
+		hlt1->SetPos(sf::Vector2f(size.x * i +11 * GameEngine::GameEngineMain::GetInstance()->GetWindowWidth() / 12, 720.0f));
+		GameEngine::GameEngineMain::GetInstance()->AddEntity(hlt1);
+		m_secondPlayerHealth.push_back(hlt1);
+	}
+
+	m_hud = new HUDEntity();
+	m_hud->SetPos(sf::Vector2(20.f, 320.f));
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_hud);
+
+	
+
+}
+
 void GameBoard::UpdateTraps()
 {
 	
 		sf::Vector2f closetPoint=FindClosetTrapLocation();
 		float dis = sqrt(pow((m_firstPlayer->GetPos().x - closetPoint.x), 2) + pow((m_firstPlayer->GetPos().y - closetPoint.y), 2));
-		if (dis < 150.0f)
+		if (dis < 50.0f)
 		{
-			if (m_numOfTraps <= 4)
+			if (m_numOfTraps <= ms_levelTraps)
 			{
 				if (m_invalidTrap) {
 					GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_invalidTrap);
@@ -331,5 +427,21 @@ void GameBoard::UpdateTraps()
 			}
 		}
 
+		for (std::vector<TrapEntity*>::iterator it = m_vTraps.begin(); it != m_vTraps.end();)
+		{
+			TrapEntity* trp = (*it);
+			if (!trp->GetIsActive())
+			{
+				GameEngine::GameEngineMain::GetInstance()->RemoveEntity(trp);
+				it = m_vTraps.erase(it);
+				m_numOfTraps--;
+			}
+			else
+			{
+				it++;
+
+			}
+		}
+		
 }
 

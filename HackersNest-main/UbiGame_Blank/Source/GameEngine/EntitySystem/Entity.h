@@ -86,7 +86,8 @@ namespace GameEngine
 
             return newComponent;
         }
-
+        bool GetIsActive() const { return m_isActive; }
+        void SetIsActive(bool act) { m_isActive = act; }
     protected:
         void DestroyComponents();
 
@@ -102,5 +103,7 @@ namespace GameEngine
         float				   m_localRotOffset;
 
         std::optional<std::string> m_entityTag;
+
+        bool m_isActive;
     };
 }
